@@ -50,4 +50,43 @@ object IconSet {
     val Asset = Icons.Default.AccountBalance
     val Subscription = Icons.Default.Subscriptions
     val CheckIn = Icons.Default.CheckCircle
+
+    private val iconMap = mapOf(
+        "Birthday" to Birthday,
+        "Anniversary" to Anniversary,
+        "Deadline" to Deadline,
+        "Calendar" to Calendar,
+        "Countdown" to Countdown,
+        "Run" to Run,
+        "Walk" to Walk,
+        "Fitness" to Fitness,
+        "Bike" to Bike,
+        "Swim" to Swim,
+        "Yoga" to Yoga,
+        "TV" to TV,
+        "Clean" to Clean,
+        "Water" to Water,
+        "Food" to Food,
+        "Book" to Book,
+        "Music" to Music,
+        "Phone" to Phone,
+        "Computer" to Computer,
+        "Headphones" to Headphones,
+        "Home" to Home,
+        "Clothes" to Clothes,
+        "Package" to Package,
+        "Check" to Check,
+        "Close" to Close,
+        "Add" to Add,
+        "Delete" to Delete,
+        "Settings" to Settings,
+        "Search" to Search,
+        "Diary" to Diary,
+        "Plan" to Plan,
+        "Asset" to Asset,
+        "Subscription" to Subscription,
+        "CheckIn" to CheckIn
+    )
+
+    fun fromName(name: String): ImageVector = iconMap[name] ?: Icons.Default.CheckCircle
 }
