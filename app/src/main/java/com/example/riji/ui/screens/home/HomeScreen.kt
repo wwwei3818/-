@@ -6,13 +6,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +25,7 @@ import com.example.riji.util.DateUtils
 
 data class HomeItem(
     val id: Long,
-    val icon: String,
+    val icon: ImageVector,
     val title: String,
     val subtitle: String,
     val extraInfo: String?,
@@ -80,7 +80,7 @@ fun HomeScreen(
             items.add(
                 HomeItem(
                     id = ann.id,
-                    icon = ann.icon,
+                    icon = Icons.Default.Cake,
                     title = "${ann.name}$prefix",
                     subtitle = subtitle,
                     extraInfo = DateUtils.formatDate(ann.date),
@@ -94,7 +94,7 @@ fun HomeScreen(
             items.add(
                 HomeItem(
                     id = ci.id,
-                    icon = ci.icon,
+                    icon = Icons.Default.CheckCircle,
                     title = ci.name,
                     subtitle = "点击打卡",
                     extraInfo = null,
@@ -109,7 +109,7 @@ fun HomeScreen(
             items.add(
                 HomeItem(
                     id = -1,
-                    icon = "💰",
+                    icon = Icons.Default.AccountBalance,
                     title = "我的资产",
                     subtitle = "¥%,.0f".format(total),
                     extraInfo = "${assets.size} 件",
@@ -131,7 +131,7 @@ fun HomeScreen(
             items.add(
                 HomeItem(
                     id = -2,
-                    icon = "📺",
+                    icon = Icons.Default.Subscriptions,
                     title = "我的订阅",
                     subtitle = "¥%,.0f/月".format(monthly),
                     extraInfo = "${subscriptions.size} 个",
@@ -145,7 +145,7 @@ fun HomeScreen(
             items.add(
                 HomeItem(
                     id = plan.id,
-                    icon = plan.icon,
+                    icon = Icons.Default.ListAlt,
                     title = plan.name,
                     subtitle = "点击查看",
                     extraInfo = null,
@@ -160,7 +160,7 @@ fun HomeScreen(
             items.add(
                 HomeItem(
                     id = diary.id,
-                    icon = "📝",
+                    icon = Icons.Default.Edit,
                     title = "日记",
                     subtitle = preview,
                     extraInfo = DateUtils.formatDate(diary.createdAt),
