@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.Anniversary
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import com.example.riji.util.DateUtils
 import kotlinx.coroutines.launch
@@ -75,9 +76,11 @@ fun AnniversaryDetailScreen(
                             .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = ann.icon,
-                            style = MaterialTheme.typography.headlineLarge
+                        Icon(
+                            imageVector = IconSet.fromName(ann.icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(48.dp),
+                            tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(

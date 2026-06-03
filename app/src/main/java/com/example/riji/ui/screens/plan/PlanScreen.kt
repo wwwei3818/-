@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.Plan
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import kotlinx.coroutines.launch
 
@@ -173,12 +174,22 @@ private fun PlanCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "${plan.icon} ${plan.name}",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.weight(1f)
-                )
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = IconSet.fromName(plan.icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = plan.name,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
                 Text(
                     text = "进度 ${(progress * 100).toInt()}%%",
                     style = MaterialTheme.typography.bodyMedium,

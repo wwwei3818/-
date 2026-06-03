@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.Plan
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import kotlinx.coroutines.launch
 
@@ -26,7 +28,7 @@ fun AddPlanScreen(
 
     var name by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
-    var icon by remember { mutableStateOf("📋") }
+    var icon by remember { mutableStateOf("Plan") }
 
     // Load categories from database
     val dbCategories by database.categoryDao().getAllCategories().collectAsState(initial = emptyList())
@@ -41,7 +43,11 @@ fun AddPlanScreen(
         }
     }
 
-    val icons = listOf("📋", "✈️", "💍", "💻", "🎯", "📚", "🏠", "🎁", "⭐", "🎮")
+    val icons = listOf(
+        "Plan" to Icons.Default.Assignment,
+        "Flight" to Icons.Default.Flight,
+        "Work" to Icons.Default.Work
+    )
 
     Scaffold(
         topBar = {
@@ -87,11 +93,17 @@ fun AddPlanScreen(
             Text("选择图标", style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                icons.forEach { emoji ->
+                icons.forEach { (name, imageVector) ->
                     FilterChip(
-                        selected = icon == emoji,
-                        onClick = { icon = emoji },
-                        label = { Text(emoji) }
+                        selected = icon == name,
+                        onClick = { icon = name },
+                        label = {
+                            Icon(
+                                imageVector = imageVector,
+                                contentDescription = name,
+                                tint = if (icon == name) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     )
                 }
             }

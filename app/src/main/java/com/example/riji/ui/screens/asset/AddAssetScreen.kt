@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -14,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.Asset
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import kotlinx.coroutines.launch
 
@@ -29,7 +31,7 @@ fun AddAssetScreen(
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
-    var icon by remember { mutableStateOf("📱") }
+    var icon by remember { mutableStateOf("Phone") }
     var note by remember { mutableStateOf("") }
 
     var showDatePicker by remember { mutableStateOf(false) }
@@ -51,7 +53,12 @@ fun AddAssetScreen(
     // Price validation
     val isValidPrice = price.toDoubleOrNull() != null && (price.toDoubleOrNull() ?: 0.0) > 0
 
-    val icons = listOf("📱", "💻", "🎧", "🖥️", "🏠", "👕", "👟", "📦", "🎁", "🎮")
+    val icons = listOf(
+        "Phone" to Icons.Default.Phone,
+        "Computer" to Icons.Default.Computer,
+        "Headphones" to Icons.Default.Headphones,
+        "Home" to Icons.Default.Home
+    )
 
     Scaffold(
         topBar = {
@@ -96,11 +103,17 @@ fun AddAssetScreen(
             Text("选择图标", style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                icons.forEach { emoji ->
+                icons.forEach { (name, imageVector) ->
                     FilterChip(
-                        selected = icon == emoji,
-                        onClick = { icon = emoji },
-                        label = { Text(emoji) }
+                        selected = icon == name,
+                        onClick = { icon = name },
+                        label = {
+                            Icon(
+                                imageVector = imageVector,
+                                contentDescription = name,
+                                tint = if (icon == name) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     )
                 }
             }

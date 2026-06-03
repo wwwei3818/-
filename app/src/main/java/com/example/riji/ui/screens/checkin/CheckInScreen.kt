@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.CheckIn
 import com.example.riji.data.entity.CheckInRecord
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import com.example.riji.util.DateUtils
 import kotlinx.coroutines.launch
@@ -105,7 +106,12 @@ fun CheckInScreen(
                             .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = ci.icon, style = MaterialTheme.typography.headlineLarge)
+                        Icon(
+                            imageVector = IconSet.fromName(ci.icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(48.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                         Spacer(modifier = Modifier.height(12.dp))
 
                         val isCheckedToday = records.any { DateUtils.getStartOfDay(it.date) == today }

@@ -6,14 +6,17 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.Anniversary
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import kotlinx.coroutines.launch
 
@@ -31,7 +34,7 @@ fun AddAnniversaryScreen(
     var repeatType by remember { mutableStateOf("yearly") }
     var category by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
-    var icon by remember { mutableStateOf("🎂") }
+    var icon by remember { mutableStateOf("Anniversary") }
     var remindDays by remember { mutableStateOf("0") }
 
     // Load categories from database
@@ -53,7 +56,12 @@ fun AddAnniversaryScreen(
 
     val types = listOf("birthday" to "生日", "anniversary" to "纪念日", "deadline" to "截止日", "payday" to "发薪日", "rent" to "交租日")
     val repeatTypes = listOf("none" to "不重复", "yearly" to "每年", "monthly" to "每月", "weekly" to "每周")
-    val icons = listOf("🎂", "🎉", "💍", "📅", "💰", "🏠", "✈️", "🎓", "🎁", "⭐")
+    val icons = listOf(
+        "Anniversary" to Icons.Default.EmojiEvents,
+        "Birthday" to Icons.Default.Cake,
+        "Deadline" to Icons.Default.Timer,
+        "Calendar" to Icons.Default.CalendarToday
+    )
 
     Scaffold(
         topBar = {
@@ -103,11 +111,17 @@ fun AddAnniversaryScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                icons.forEach { emoji ->
+                icons.forEach { (name, imageVector) ->
                     FilterChip(
-                        selected = icon == emoji,
-                        onClick = { icon = emoji },
-                        label = { Text(emoji) }
+                        selected = icon == name,
+                        onClick = { icon = name },
+                        label = {
+                            Icon(
+                                imageVector = imageVector,
+                                contentDescription = name,
+                                tint = if (icon == name) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     )
                 }
             }

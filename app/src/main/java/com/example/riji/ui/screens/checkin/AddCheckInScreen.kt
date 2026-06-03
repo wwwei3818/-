@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.CheckIn
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import kotlinx.coroutines.launch
 
@@ -25,7 +27,7 @@ fun AddCheckInScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var name by remember { mutableStateOf("") }
-    var icon by remember { mutableStateOf("🏃") }
+    var icon by remember { mutableStateOf("Run") }
     var category by remember { mutableStateOf("") }
 
     // Load categories from database
@@ -42,8 +44,22 @@ fun AddCheckInScreen(
     }
 
     // Preset templates
-    val exerciseIcons = listOf("🏃" to "跑步", "🚶" to "散步", "💪" to "健身", "🚴" to "骑行", "🏊" to "游泳", "🧘" to "瑜伽")
-    val lifeIcons = listOf("📺" to "看剧", "🧹" to "打扫", "💧" to "喝水", "🍜" to "吃饭", "📚" to "阅读", "🎵" to "音乐")
+    val exerciseIcons = listOf(
+        "Run" to Icons.Default.DirectionsRun,
+        "Walk" to Icons.Default.DirectionsWalk,
+        "Fitness" to Icons.Default.FitnessCenter,
+        "Bike" to Icons.Default.DirectionsBike,
+        "Swim" to Icons.Default.Pool,
+        "Yoga" to Icons.Default.SelfImprovement
+    )
+    val lifeIcons = listOf(
+        "TV" to Icons.Default.Tv,
+        "Clean" to Icons.Default.CleaningServices,
+        "Water" to Icons.Default.WaterDrop,
+        "Food" to Icons.Default.Restaurant,
+        "Book" to Icons.Default.MenuBook,
+        "Music" to Icons.Default.MusicNote
+    )
 
     Scaffold(
         topBar = {
@@ -88,14 +104,38 @@ fun AddCheckInScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                (exerciseIcons + lifeIcons).forEach { (emoji, label) ->
+                (exerciseIcons + lifeIcons).forEach { (iconName, imageVector) ->
+                    val label = when (iconName) {
+                        "Run" -> "跑步"
+                        "Walk" -> "散步"
+                        "Fitness" -> "健身"
+                        "Bike" -> "骑行"
+                        "Swim" -> "游泳"
+                        "Yoga" -> "瑜伽"
+                        "TV" -> "看剧"
+                        "Clean" -> "打扫"
+                        "Water" -> "喝水"
+                        "Food" -> "吃饭"
+                        "Book" -> "阅读"
+                        "Music" -> "音乐"
+                        else -> iconName
+                    }
                     FilterChip(
-                        selected = icon == emoji && name == label,
+                        selected = icon == iconName && name == label,
                         onClick = {
-                            icon = emoji
+                            icon = iconName
                             name = label
                         },
-                        label = { Text("$emoji $label") }
+                        label = {
+                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Icon(
+                                    imageVector = imageVector,
+                                    contentDescription = label,
+                                    tint = if (icon == iconName && name == label) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                                )
+                                Text(label)
+                            }
+                        }
                     )
                 }
             }
@@ -139,16 +179,35 @@ fun AddCheckInScreen(
             // Icon selection
             Text("选择图标", style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.height(8.dp))
-            val allIcons = listOf("🏃", "🚶", "💪", "🚴", "🏊", "🧘", "📺", "🧹", "💧", "🍜", "📚", "🎵", "⚽", "🎮", "✍️", "🎤")
+            val allIcons = listOf(
+                "Run" to Icons.Default.DirectionsRun,
+                "Walk" to Icons.Default.DirectionsWalk,
+                "Fitness" to Icons.Default.FitnessCenter,
+                "Bike" to Icons.Default.DirectionsBike,
+                "Swim" to Icons.Default.Pool,
+                "Yoga" to Icons.Default.SelfImprovement,
+                "TV" to Icons.Default.Tv,
+                "Clean" to Icons.Default.CleaningServices,
+                "Water" to Icons.Default.WaterDrop,
+                "Food" to Icons.Default.Restaurant,
+                "Book" to Icons.Default.MenuBook,
+                "Music" to Icons.Default.MusicNote
+            )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                allIcons.forEach { emoji ->
+                allIcons.forEach { (iconName, imageVector) ->
                     FilterChip(
-                        selected = icon == emoji,
-                        onClick = { icon = emoji },
-                        label = { Text(emoji) }
+                        selected = icon == iconName,
+                        onClick = { icon = iconName },
+                        label = {
+                            Icon(
+                                imageVector = imageVector,
+                                contentDescription = iconName,
+                                tint = if (icon == iconName) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     )
                 }
             }

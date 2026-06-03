@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.riji.data.AppDatabase
 import com.example.riji.data.entity.Plan
 import com.example.riji.data.entity.PlanTask
+import com.example.riji.ui.components.IconSet
 import com.example.riji.ui.components.ProtectedTopBar
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -92,11 +93,21 @@ fun PlanDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = "${plan?.icon ?: "📋"} ${plan?.name ?: ""}",
-                                style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.Medium
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = IconSet.fromName(plan?.icon ?: "Plan"),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                                Text(
+                                    text = plan?.name ?: "",
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
                             Text(
                                 text = "进度 ${(displayProgress * 100).roundToInt()}%%",
                                 style = MaterialTheme.typography.bodyLarge,
