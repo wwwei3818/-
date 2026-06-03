@@ -8,20 +8,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Subscriptions
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.riji.ui.theme.AppShapes
 
 data class AddMenuItem(
-    val icon: String,
+    val icon: ImageVector,
     val title: String,
     val description: String,
     val onClick: () -> Unit
@@ -39,12 +46,12 @@ fun AddItemScreen(
     onNavigateToAddDiary: () -> Unit
 ) {
     val menuItems = listOf(
-        AddMenuItem("📝", "日记", "记录想法和心情，随时写下来", onNavigateToAddDiary),
-        AddMenuItem("📅", "正 / 倒计时", "记录交租日、发工资、截止日、到期日等", onNavigateToAddAnniversary),
-        AddMenuItem("📋", "计划记录", "按照年 / 长期计划添加，记录待办的事项", onNavigateToAddPlan),
-        AddMenuItem("💰", "资产记录", "记录买下物品，自动汇总换算的价格", onNavigateToAddAsset),
-        AddMenuItem("📺", "订阅记录", "记录各大App购买的会员，自动计算价格", onNavigateToAddSubscription),
-        AddMenuItem("🏃", "打卡记录", "记录生活中的习惯与行为，长期追踪", onNavigateToAddCheckIn)
+        AddMenuItem(Icons.Default.Edit, "日记", "记录想法和心情，随时写下来", onNavigateToAddDiary),
+        AddMenuItem(Icons.Default.Timer, "正 / 倒计时", "记录交租日、发工资、截止日、到期日等", onNavigateToAddAnniversary),
+        AddMenuItem(Icons.Default.Assignment, "计划记录", "按照年 / 长期计划添加，记录待办的事项", onNavigateToAddPlan),
+        AddMenuItem(Icons.Default.AccountBalance, "资产记录", "记录买下物品，自动汇总换算的价格", onNavigateToAddAsset),
+        AddMenuItem(Icons.Default.Subscriptions, "订阅记录", "记录各大App购买的会员，自动计算价格", onNavigateToAddSubscription),
+        AddMenuItem(Icons.Default.CheckCircle, "打卡记录", "记录生活中的习惯与行为，长期追踪", onNavigateToAddCheckIn)
     )
 
     Scaffold(
@@ -149,7 +156,12 @@ private fun AddMenuItemRow(item: AddMenuItem) {
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = item.icon, fontSize = 24.sp)
+                Icon(
+                    imageVector = item.icon,
+                    contentDescription = item.title,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(24.dp)
+                )
             }
 
             Spacer(modifier = Modifier.width(16.dp))
